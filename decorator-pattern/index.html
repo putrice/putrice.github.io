@@ -1,0 +1,405 @@
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+    <title>Decorator Pattern</title>
+
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <meta name="description" content="">
+
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Decorator Pattern">
+    <meta name="twitter:description" content="">
+
+    <meta property="og:url" content="http://localhost:2368">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Decorator Pattern">  
+    <meta property="og:description" content="">
+    <meta property="og:site_name" content="Putri's Note">
+
+    <meta itemprop="name" content="Decorator Pattern">
+    <meta itemprop="description" content="">
+
+    <meta name="twitter:site" content="@yourblogtwitter">
+
+<meta name="twitter:creator" content="@yourtwitter">
+
+<meta property="article:author" content="https://www.facebook.com/yourprofile">
+
+<meta property="article:publisher" content="https://www.facebook.com/yourblogprofile">
+
+<meta property="fb:admins" content="">
+
+<meta name="google-site-verification" content="">
+
+<link rel="author" href="https://plus.google.com/yourprofile">
+
+<meta name="theme-color" content="">
+
+    <link href="../favicon.ico" rel="shortcut icon" type="image/x-icon">
+    <link href="../apple-touch-icon-precomposed.png" rel="apple-touch-icon">
+
+    <link href="http://fonts.googleapis.com/" rel="dns-prefetch">
+    <link href="http://fonts.googleapis.com/css?family=Noto+Serif:400,700,400italic%7COpen+Sans:700,400&amp;subset=latin,latin-ext" rel="stylesheet">
+
+    <link rel="stylesheet" href="../assets/css/main.min.css?v=5cb6f05a5e">
+
+    <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+    <script type="text/javascript">
+      var ga_ua = 'UA-XXXXX-X';
+
+var disqus_shortname = 'example';
+
+var enable_pjax = true;
+
+      // Pace Options
+      // ==============
+      window.paceOptions = {
+        catchupTime: 100,
+        minTime: 100,
+        elements: false,
+        restartOnRequestAfter: 500,
+        startOnPageLoad: false
+      }
+
+      // Ghostium Globals
+      // ==============
+      window.GHOSTIUM = {};
+      GHOSTIUM.haveGA = typeof ga_ua !== 'undefined' && ga_ua !== 'UA-XXXXX-X';
+      GHOSTIUM.haveDisqus = typeof disqus_shortname !== 'undefined' && disqus_shortname !== 'example';
+      GHOSTIUM.enablePjax = typeof enable_pjax !== 'undefined' ? enable_pjax : true;
+    </script>
+
+    <script src="../assets/js/head-scripts.min.js?v=5cb6f05a5e"></script>
+
+    <link rel="canonical" href="http://localhost:2368/decorator-pattern/">
+    <meta name="referrer" content="origin">
+    
+    <meta property="og:site_name" content="Putri's Note">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Decorator Pattern">
+    <meta property="og:description" content="Hi. It's me. Again.  So, this is decorator pattern. &quot;Decorator Pattern attaches additional responsibilities to an object dynamically. Decorators provide a flexible alternative to subclassing for extending functionality&quot;, the book said that.  And I think the explanation is clear enough to understand.  Here's the example implementation.  First. Let's create a">
+    <meta property="og:url" content="http://localhost:2368/decorator-pattern/">
+    <meta property="article:published_time" content="2016-04-04T06:00:42.633Z">
+    <meta property="article:modified_time" content="2016-04-04T06:00:42.631Z">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Decorator Pattern">
+    <meta name="twitter:description" content="Hi. It's me. Again.  So, this is decorator pattern. &quot;Decorator Pattern attaches additional responsibilities to an object dynamically. Decorators provide a flexible alternative to subclassing for extending functionality&quot;, the book said that.  And I think the explanation is clear enough to understand.  Here's the example implementation.  First. Let's create a">
+    <meta name="twitter:url" content="http://localhost:2368/decorator-pattern/">
+    
+    <script type="application/ld+json">
+{
+    "@context": "http://schema.org",
+    "@type": "Article",
+    "publisher": "Putri's Note",
+    "author": {
+        "@type": "Person",
+        "name": "Avinta Putri Agistasari",
+        "image": "//www.gravatar.com/avatar/56407bceb93c2f2c8e5c3dcb9e120d3a?s=250&d=mm&r=x",
+        "url": "http://localhost:2368/author/avinta/"
+    },
+    "headline": "Decorator Pattern",
+    "url": "http://localhost:2368/decorator-pattern/",
+    "datePublished": "2016-04-04T06:00:42.633Z",
+    "dateModified": "2016-04-04T06:00:42.631Z",
+    "description": "Hi. It&#x27;s me. Again.  So, this is decorator pattern. &quot;Decorator Pattern attaches additional responsibilities to an object dynamically. Decorators provide a flexible alternative to subclassing for extending functionality&quot;, the book said that.  And I think the explanation is clear enough to understand.  Here&#x27;s the example implementation.  First. Let&#x27;s create a"
+}
+    </script>
+
+    <meta name="generator" content="Ghost 0.7">
+    <link rel="alternate" type="application/rss+xml" title="Putri's Note" href="http://localhost:2368/rss/">
+  </head>
+  <body class="post-template">
+
+    <button data-action="open-drawer" id="drawer-button" class="drawer-button"><i class="fa fa-bars"></i></button>
+<nav tabindex="-1" class="drawer">
+  <div class="drawer-container">
+    <!--.drawer-search(role="search")-->
+    <ul role="navigation" class="drawer-list">
+      
+<li class="drawer-list-item">
+  <a href="../" data-pjax>
+    <i class="fa fa-home"></i>Home
+  </a>
+</li>
+<li class="drawer-list-item">
+  <a href="http://localhost:2368/rss/">
+    <i class="fa fa-rss"></i>Subscribe to Feed
+  </a>
+</li>
+<li class="drawer-list-divider">
+<li class="drawer-list-item drawer-list-title">
+  Follow me
+</li>
+<li class="drawer-list-item">
+  <a href="http://twitter.com" target="_blank">
+    <i class="fa fa-twitter"></i>Twitter
+  </a>
+</li>
+<li class="drawer-list-item">
+  <a href="http://github.com" target="_blank">
+    <i class="fa fa-github"></i>Github
+  </a>
+</li>
+    </ul>
+  </div>
+</nav>
+
+    <div class="drawer-overlay"></div>
+    <main id="container" role="main" class="container">
+      <div class="surface">
+        <div class="surface-container">
+          <div data-pjax-container class="content">
+            
+<section class="wrapper wrapper-post">
+  <div class="wrapper-container">
+    <article itemscope itemtype="http://schema.org/BlogPosting" role="article" class="post post">
+        <section class="post-container">
+          <header class="post-header">
+            <ul class="post-meta-list">
+              <li class="post-meta-item">
+                <time datetime="2016-04-04" itemprop="datePublished">
+                  a few seconds ago
+                </time>
+              </li>
+              <li class="post-meta-item">
+                <a href="index.html#disqus_thread" data-disqus-identifier="5">Comments</a>
+              </li>
+            </ul>
+            <h1 itemprop="name headline" class="post-title"><a href="index.html" itemprop="url" data-pjax title="Decorator Pattern">Decorator Pattern</a></h1>
+            <!--h2 itemprop="about" class="post-subtitle"></h2-->
+          </header>
+          <aside class="post-side">
+            <div class="post-author">
+                <a href="index.html" class="post-author-avatar">
+                  <img src="http://www.gravatar.com/avatar/56407bceb93c2f2c8e5c3dcb9e120d3a?s=250&amp;d=mm&amp;r=x" alt="Avinta Putri Agistasari">
+                </a>
+              <div class="post-author-info">
+                <a href="index.html" class="post-author-name">
+                  Avinta Putri Agistasari
+                </a>
+                <p class="post-author-bio"></p>
+              </div>
+            </div>
+          </aside>
+          <div itemprop="articleBody" class="post-body">
+            <p>Hi. It's me. Again. <br>
+So, this is decorator pattern. "Decorator Pattern attaches additional responsibilities to an object dynamically. Decorators provide a flexible alternative to subclassing for extending functionality", the book said that. <br>
+And I think the explanation is clear enough to understand. <br>
+Here's the example implementation. <br>
+First. Let's create a abstract component class. <br>
+<u>Room.java</u>  </p>
+
+<pre style="color:#000000;background:#ffffff;"><span style="color:#7f0055; font-weight:bold; ">public</span> <span style="color:#7f0055; font-weight:bold; ">abstract</span> <span style="color:#7f0055; font-weight:bold; ">class</span> Room {  
+    <span style="color:#7f0055; font-weight:bold; ">String</span> roomName = <span style="color:#2a00ff; ">"Common Room"</span>;
+
+    <span style="color:#7f0055; font-weight:bold; ">public</span> <span style="color:#7f0055; font-weight:bold; ">String</span> getDescription(){
+        <span style="color:#7f0055; font-weight:bold; ">return</span> roomName;
+    }
+
+    <span style="color:#7f0055; font-weight:bold; ">public</span> <span style="color:#7f0055; font-weight:bold; ">abstract</span> <span style="color:#7f0055; font-weight:bold; ">double</span> costPerNight();
+}
+</pre>  
+
+<p>Component class can be used on its own, or wrapped by a decorator. <br>
+Then create the concrete class of component. <br>
+<u>DeluxeRoom.java</u>  </p>
+
+<pre style="color:#000000;background:#ffffff;"><span style="color:#7f0055; font-weight:bold; ">public</span> <span style="color:#7f0055; font-weight:bold; ">class</span> DeluxeRoom <span style="color:#7f0055; font-weight:bold; ">extends</span> Room {
+
+    <span style="color:#7f0055; font-weight:bold; ">public</span> DeluxeRoom() {
+        roomName = <span style="color:#2a00ff; ">"Deluxe Room"</span>;
+    }
+
+    @Override
+    <span style="color:#7f0055; font-weight:bold; ">public</span> <span style="color:#7f0055; font-weight:bold; ">double</span> costPerNight() {
+        <span style="color:#7f0055; font-weight:bold; ">return</span> 4.00;
+    }
+
+}
+</pre>  
+
+<p><u>SuperiorRoom.java</u>  </p>
+
+<pre style="color:#000000;background:#ffffff;"><span style="color:#7f0055; font-weight:bold; ">public</span> <span style="color:#7f0055; font-weight:bold; ">class</span> SuperiorRoom <span style="color:#7f0055; font-weight:bold; ">extends</span> Room{
+
+    <span style="color:#7f0055; font-weight:bold; ">public</span> SuperiorRoom() {
+        roomName = <span style="color:#2a00ff; ">"Superior Room"</span>;
+    }
+
+    @Override
+    <span style="color:#7f0055; font-weight:bold; ">public</span> <span style="color:#7f0055; font-weight:bold; ">double</span> costPerNight() {
+        <span style="color:#7f0055; font-weight:bold; ">return</span> 10.00;
+    }
+
+}
+</pre>  
+
+<p>The concrete classes will dynamically add new behaviour to. Next, create a abstract decorator class that implement the same abstract class as the concrete classes of component. <br>
+<u>RoomDecorator.java</u>  </p>
+
+<pre style="color:#000000;background:#ffffff;"><span style="color:#7f0055; font-weight:bold; ">public</span> <span style="color:#7f0055; font-weight:bold; ">abstract</span> <span style="color:#7f0055; font-weight:bold; ">class</span> RoomDecorator <span style="color:#7f0055; font-weight:bold; ">extends</span> Room {  
+    <span style="color:#7f0055; font-weight:bold; ">public</span> <span style="color:#7f0055; font-weight:bold; ">abstract</span> <span style="color:#7f0055; font-weight:bold; ">String</span> getDescription();
+}
+</pre>  
+
+<p>And now, lets create the concrete classes of Decorator. <br>
+<u>ExtraTowel.java</u>  </p>
+
+<pre style="color:#000000;background:#ffffff;"><span style="color:#7f0055; font-weight:bold; ">public</span> <span style="color:#7f0055; font-weight:bold; ">class</span> ExtraTowel <span style="color:#7f0055; font-weight:bold; ">extends</span> RoomDecorator {  
+    Room room;
+
+    <span style="color:#7f0055; font-weight:bold; ">public</span> ExtraTowel(Room room) {
+        <span style="color:#7f0055; font-weight:bold; ">this</span>.room = room;
+    }
+
+    @Override
+    <span style="color:#7f0055; font-weight:bold; ">public</span> <span style="color:#7f0055; font-weight:bold; ">String</span> getDescription() {
+        <span style="color:#7f0055; font-weight:bold; ">return</span> room.getDescription().concat(<span style="color:#2a00ff; ">", with Extra Towel"</span>);
+    }
+
+    @Override
+    <span style="color:#7f0055; font-weight:bold; ">public</span> <span style="color:#7f0055; font-weight:bold; ">double</span> costPerNight() {
+        <span style="color:#7f0055; font-weight:bold; ">return</span> 2 + room.costPerNight();
+    }
+
+}
+</pre>  
+
+<p><u>Breakfast.java</u>  </p>
+
+<pre style="color:#000000;background:#ffffff;"><span style="color:#7f0055; font-weight:bold; ">public</span> <span style="color:#7f0055; font-weight:bold; ">class</span> Breakfast <span style="color:#7f0055; font-weight:bold; ">extends</span> RoomDecorator{  
+    Room room;
+
+    <span style="color:#7f0055; font-weight:bold; ">public</span> Breakfast(Room room) {
+        <span style="color:#7f0055; font-weight:bold; ">this</span>.room = room;
+    }
+
+    @Override
+    <span style="color:#7f0055; font-weight:bold; ">public</span> <span style="color:#7f0055; font-weight:bold; ">String</span> getDescription() {
+        <span style="color:#7f0055; font-weight:bold; ">return</span> room.getDescription().concat(<span style="color:#2a00ff; ">", with Breakfast"</span>);
+    }
+
+    @Override
+    <span style="color:#7f0055; font-weight:bold; ">public</span> <span style="color:#7f0055; font-weight:bold; ">double</span> costPerNight() {
+        <span style="color:#7f0055; font-weight:bold; ">return</span> 5 + room.costPerNight();
+    }
+
+}
+</pre>  
+
+<p>And, lastly lets run it. <br>
+<u>RoomReservationTest.java</u>  </p>
+
+<pre style="color:#000000;background:#ffffff;"><span style="color:#7f0055; font-weight:bold; ">public</span> <span style="color:#7f0055; font-weight:bold; ">class</span> RoomReservationTest {
+
+    <span style="color:#7f0055; font-weight:bold; ">public</span> <span style="color:#7f0055; font-weight:bold; ">static</span> <span style="color:#7f0055; font-weight:bold; ">void</span> main(<span style="color:#7f0055; font-weight:bold; ">String</span> [] args){
+        Room deluxeRoom = <span style="color:#7f0055; font-weight:bold; ">new</span> DeluxeRoom();
+        <span style="color:#7f0055; font-weight:bold; ">System</span>.out.println(deluxeRoom.getDescription() + <span style="color:#2a00ff; ">" $"</span> + deluxeRoom.costPerNight());
+
+        Room superiorRoom = <span style="color:#7f0055; font-weight:bold; ">new</span> SuperiorRoom();
+        superiorRoom = <span style="color:#7f0055; font-weight:bold; ">new</span> ExtraTowel(superiorRoom);
+        superiorRoom = <span style="color:#7f0055; font-weight:bold; ">new</span> Breakfast(superiorRoom);
+        <span style="color:#7f0055; font-weight:bold; ">System</span>.out.println(superiorRoom.getDescription() + <span style="color:#2a00ff; ">" $"</span> + superiorRoom.costPerNight());
+
+        Room deluxeRoom2 = <span style="color:#7f0055; font-weight:bold; ">new</span> DeluxeRoom();
+        deluxeRoom2 = <span style="color:#7f0055; font-weight:bold; ">new</span> Breakfast(deluxeRoom2);
+        <span style="color:#7f0055; font-weight:bold; ">System</span>.out.println(deluxeRoom2.getDescription() + <span style="color:#2a00ff; ">" $"</span> + deluxeRoom2.costPerNight());
+
+    }
+
+}
+</pre>
+          </div>
+          <footer class="post-footer">
+            <div itemprop="author" itemscope itemtype="http://schema.org/Person" class="post-author">
+                <a href="index.html" class="post-author-avatar">
+                  <img itemprop="image" src="http://www.gravatar.com/avatar/56407bceb93c2f2c8e5c3dcb9e120d3a?s=250&amp;d=mm&amp;r=x" alt="Avinta Putri Agistasari">
+                </a>
+              <div class="post-author-info">
+                <h4 class="post-footer-heading">Written By</h4>
+                <a href="index.html" itemprop="url" class="post-author-name">
+                  <span itemprop="name">Avinta Putri Agistasari</span>
+                </a>
+                <p itemprop="description" class="post-author-bio"></p>
+                <p class="post-info">
+                  <b class="post-info-title">Published on</b>
+                  <time class="post-date">April 04, 2016</time>
+                </p>
+              </div>
+            </div>
+            <div class="post-social">
+              <h4 class="post-footer-heading">Spread the word</h4>
+              <a href="index.html#" data-action="share-twitter"><i class="fa fa-fw fa-lg fa-twitter"></i></a>
+              <a href="index.html#" data-action="share-facebook"><i class="fa fa-fw fa-lg fa-facebook"></i></a>
+              <a href="index.html#" data-action="share-gplus"><i class="fa fa-fw fa-lg fa-google-plus"></i></a>
+            </div>
+          </footer>
+        </section>
+      <section itemprop="comment" class="post-comments">
+        <div id="disqus_thread"></div>
+      </section>
+    </article>
+
+    <footer role="contentinfo" class="footer">
+  <p><small>© 2016. All Rights Reserved.</small></p>
+  <p><small><a href="http://ghostium.oswaldoacauan.com/" target="_blank">Ghostium Theme</a> by <a href="http://twitter.com/oswaldoacauan" target="_blank">@oswaldoacauan</a></small></p>
+  <p><small>Proudly published with <a href="http://ghost.org" target="_blank">Ghost</a></small></p>
+</footer>
+  </div>
+</section>
+
+<script type="text/javascript">
+  if(GHOSTIUM.haveDisqus) {
+    var disqus_identifier = '5';
+
+    if(typeof DISQUS !== 'object') {
+      (function () {
+      var s = document.createElement('script'); s.async = true;
+      s.type = 'text/javascript';
+      s.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+      }());
+    }
+  } else {
+    document.querySelector('.post-comments').remove();
+  }
+</script>
+
+          </div>
+        </div>
+      </div>
+    </main>
+
+    
+
+    <script src="../assets/js/foot-scripts.min.js?v=5cb6f05a5e"></script>
+
+    <script type="text/javascript">
+
+      if(GHOSTIUM.haveGA) {
+        (function(g,h,o,s,t,z){g.GoogleAnalyticsObject=s;g[s]||(g[s]=
+        function(){(g[s].q=g[s].q||[]).push(arguments)});g[s].s=+new Date;
+        t=h.createElement(o);z=h.getElementsByTagName(o)[0];
+        t.src='//www.google-analytics.com/analytics.js';
+        z.parentNode.insertBefore(t,z)}(window,document,'script','ga'));
+        ga('create',ga_ua);ga('send','pageview');
+      }
+
+      if(GHOSTIUM.haveDisqus) {
+        (function () {
+        var s = document.createElement('script'); s.async = true;
+        s.type = 'text/javascript';
+        s.src = '//' + disqus_shortname + '.disqus.com/count.js';
+        (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+        }());
+      }
+    </script>
+  </body>
